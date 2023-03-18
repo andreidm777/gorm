@@ -77,11 +77,11 @@ type TablerWithNamer interface {
 
 // Parse get data type from dialector
 func Parse(dest interface{}, cacheStore *sync.Map, namer Namer) (*Schema, error) {
-	return ParseWithSpecialTableName(dest, cacheStore, namer, "")
+	return ParseWithSpecialTableName(dest, cacheStore, namer, "", "")
 }
 
 // ParseWithSpecialTableName get data type from dialector with extra schema table
-func ParseWithSpecialTableName(dest interface{}, cacheStore *sync.Map, namer Namer, specialTableName string) (*Schema, error) {
+func ParseWithSpecialTableName(dest interface{}, cacheStore *sync.Map, namer Namer, specialTableName, pgSchema string) (*Schema, error) {
 	if dest == nil {
 		return nil, fmt.Errorf("%w: %+v", ErrUnsupportedDataType, dest)
 	}
@@ -107,11 +107,15 @@ func ParseWithSpecialTableName(dest interface{}, cacheStore *sync.Map, namer Nam
 		return nil, fmt.Errorf("%w: %s.%s", ErrUnsupportedDataType, modelType.PkgPath(), modelType.Name())
 	}
 
+	modelValue := reflect.New(modelType)
+
 	// Cache the Schema for performance,
 	// Use the modelType or modelType + schemaTable (if it present) as cache key.
 	var schemaCacheKey interface{}
 	if specialTableName != "" {
 		schemaCacheKey = fmt.Sprintf("%p-%s", modelType, specialTableName)
+	} else if pgSchema != "" {
+		schemaCacheKey = fmt.Sprintf("%p-%s", modelType, pgSchema)
 	} else {
 		schemaCacheKey = modelType
 	}
@@ -124,7 +128,6 @@ func ParseWithSpecialTableName(dest interface{}, cacheStore *sync.Map, namer Nam
 		return s, s.err
 	}
 
-	modelValue := reflect.New(modelType)
 	tableName := namer.TableName(modelType.Name())
 	if tabler, ok := modelValue.Interface().(Tabler); ok {
 		tableName = tabler.TableName()
@@ -137,6 +140,10 @@ func ParseWithSpecialTableName(dest interface{}, cacheStore *sync.Map, namer Nam
 	}
 	if specialTableName != "" && specialTableName != tableName {
 		tableName = specialTableName
+	}
+
+	if pgSchema != "" {
+		tableName = pgSchema + "." + tableName
 	}
 
 	schema := &Schema{

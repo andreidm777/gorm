@@ -46,6 +46,7 @@ type Statement struct {
 	attrs                []interface{}
 	assigns              []interface{}
 	scopes               []func(*DB) *DB
+	PgSchema             string
 }
 
 type join struct {
@@ -487,7 +488,7 @@ func (stmt *Statement) Parse(value interface{}) (err error) {
 }
 
 func (stmt *Statement) ParseWithSpecialTableName(value interface{}, specialTableName string) (err error) {
-	if stmt.Schema, err = schema.ParseWithSpecialTableName(value, stmt.DB.cacheStore, stmt.DB.NamingStrategy, specialTableName); err == nil && stmt.Table == "" {
+	if stmt.Schema, err = schema.ParseWithSpecialTableName(value, stmt.DB.cacheStore, stmt.DB.NamingStrategy, specialTableName, stmt.PgSchema); err == nil && stmt.Table == "" {
 		if tables := strings.Split(stmt.Schema.Table, "."); len(tables) == 2 {
 			stmt.TableExpr = &clause.Expr{SQL: stmt.Quote(stmt.Schema.Table)}
 			stmt.Table = tables[1]
@@ -517,6 +518,7 @@ func (stmt *Statement) clone() *Statement {
 		Context:              stmt.Context,
 		RaiseErrorOnNotFound: stmt.RaiseErrorOnNotFound,
 		SkipHooks:            stmt.SkipHooks,
+		PgSchema:             stmt.PgSchema,
 	}
 
 	if stmt.SQL.Len() > 0 {
