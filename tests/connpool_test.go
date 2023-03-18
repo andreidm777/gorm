@@ -7,9 +7,9 @@ import (
 	"reflect"
 	"testing"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	. "gorm.io/gorm/utils/tests"
+	"github.com/andreidm777/driver/mysql"
+	"github.com/andreidm777/gorm"
+	. "github.com/andreidm777/gorm/utils/tests"
 )
 
 type wrapperTx struct {

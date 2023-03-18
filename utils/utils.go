@@ -24,7 +24,7 @@ func sourceDir(file string) string {
 	dir = filepath.Dir(dir)
 
 	s := filepath.Dir(dir)
-	if filepath.Base(s) != "gorm.io" {
+	if filepath.Base(s) != "github.com/andreidm777" {
 		s = dir
 	}
 	return filepath.ToSlash(s) + "/"

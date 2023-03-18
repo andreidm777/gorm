@@ -10,10 +10,10 @@ import (
 	"strings"
 	"time"
 
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/logger"
-	"gorm.io/gorm/schema"
+	"github.com/andreidm777/gorm"
+	"github.com/andreidm777/gorm/clause"
+	"github.com/andreidm777/gorm/logger"
+	"github.com/andreidm777/gorm/schema"
 )
 
 var regFullDataType = regexp.MustCompile(`\D*(\d+)\D?`)
@@ -568,7 +568,7 @@ func (m Migrator) ColumnTypes(value interface{}) ([]gorm.ColumnType, error) {
 //	q := DB.Model(&User{})
 //	DB.Debug().Migrator().CreateView("user_view", gorm.ViewOption{Query: q, Replace: true, CheckOption: "WITH CHECK OPTION"})
 //
-// [subquery]: https://gorm.io/docs/advanced_query.html#SubQuery
+// [subquery]: https://github.com/andreidm777/docs/advanced_query.html#SubQuery
 func (m Migrator) CreateView(name string, option gorm.ViewOption) error {
 	if option.Query == nil {
 		return gorm.ErrSubQueryRequired

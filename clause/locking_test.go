@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gorm.io/gorm/clause"
+	"github.com/andreidm777/gorm/clause"
 )
 
 func TestLocking(t *testing.T) {

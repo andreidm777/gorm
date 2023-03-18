@@ -3,10 +3,10 @@ package tests_test
 import (
 	"testing"
 
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/schema"
-	. "gorm.io/gorm/utils/tests"
+	"github.com/andreidm777/gorm"
+	"github.com/andreidm777/gorm/clause"
+	"github.com/andreidm777/gorm/schema"
+	. "github.com/andreidm777/gorm/utils/tests"
 )
 
 func AssertAssociationCount(t *testing.T, data interface{}, name string, result int64, reason string) {

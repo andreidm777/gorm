@@ -9,10 +9,10 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/logger"
-	"gorm.io/gorm/schema"
-	"gorm.io/gorm/utils"
+	"github.com/andreidm777/gorm/clause"
+	"github.com/andreidm777/gorm/logger"
+	"github.com/andreidm777/gorm/schema"
+	"github.com/andreidm777/gorm/utils"
 )
 
 // Create inserts value, returning the inserted data's primary key in value's id
@@ -394,14 +394,14 @@ func (db *DB) FirstOrCreate(dest interface{}, conds ...interface{}) (tx *DB) {
 	return tx
 }
 
-// Update updates column with value using callbacks. Reference: https://gorm.io/docs/update.html#Update-Changed-Fields
+// Update updates column with value using callbacks. Reference: https://github.com/andreidm777/docs/update.html#Update-Changed-Fields
 func (db *DB) Update(column string, value interface{}) (tx *DB) {
 	tx = db.getInstance()
 	tx.Statement.Dest = map[string]interface{}{column: value}
 	return tx.callbacks.Update().Execute(tx)
 }
 
-// Updates updates attributes using callbacks. values must be a struct or map. Reference: https://gorm.io/docs/update.html#Update-Changed-Fields
+// Updates updates attributes using callbacks. values must be a struct or map. Reference: https://github.com/andreidm777/docs/update.html#Update-Changed-Fields
 func (db *DB) Updates(values interface{}) (tx *DB) {
 	tx = db.getInstance()
 	tx.Statement.Dest = values

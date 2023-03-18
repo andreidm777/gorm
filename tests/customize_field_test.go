@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"gorm.io/gorm"
-	. "gorm.io/gorm/utils/tests"
+	"github.com/andreidm777/gorm"
+	. "github.com/andreidm777/gorm/utils/tests"
 )
 
 func TestCustomizeColumn(t *testing.T) {

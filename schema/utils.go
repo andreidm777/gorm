@@ -7,8 +7,8 @@ import (
 	"regexp"
 	"strings"
 
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/utils"
+	"github.com/andreidm777/gorm/clause"
+	"github.com/andreidm777/gorm/utils"
 )
 
 var embeddedCacheKey = "embedded_cache_store"

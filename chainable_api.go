@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/utils"
+	"github.com/andreidm777/gorm/clause"
+	"github.com/andreidm777/gorm/utils"
 )
 
 // Model specify the model you would like to run db operations
@@ -40,7 +40,7 @@ func (db *DB) PgSchema(value string) (tx *DB) {
 //	// specify the lock strength to UPDATE
 //	db.Clauses(clause.Locking{Strength: "UPDATE"}).Find(&users)
 //
-// [docs]: https://gorm.io/docs/sql_builder.html#Clauses
+// [docs]: https://github.com/andreidm777/docs/sql_builder.html#Clauses
 func (db *DB) Clauses(conds ...clause.Expression) (tx *DB) {
 	tx = db.getInstance()
 	var whereConds []interface{}
@@ -202,7 +202,7 @@ func (db *DB) Omit(columns ...string) (tx *DB) {
 //	// Find the first user with name jinzhu and age not equal to 20
 //	db.Where("name = ?", "jinzhu").Where("age <> ?", "20").First(&user)
 //
-// [docs]: https://gorm.io/docs/query.html#Conditions
+// [docs]: https://github.com/andreidm777/docs/query.html#Conditions
 func (db *DB) Where(query interface{}, args ...interface{}) (tx *DB) {
 	tx = db.getInstance()
 	if conds := tx.Statement.BuildCondition(query, args...); len(conds) > 0 {
@@ -397,8 +397,8 @@ func (db *DB) Preload(query string, args ...interface{}) (tx *DB) {
 //	db.Where(User{Name: "jinzhu"}).Attrs(User{Email: "fake@fake.org"}).FirstOrInit(&user)
 //	// user -> User{Name: "jinzhu", Age: 20}
 //
-// [FirstOrCreate]: https://gorm.io/docs/advanced_query.html#FirstOrCreate
-// [FirstOrInit]: https://gorm.io/docs/advanced_query.html#FirstOrInit
+// [FirstOrCreate]: https://github.com/andreidm777/docs/advanced_query.html#FirstOrCreate
+// [FirstOrInit]: https://github.com/andreidm777/docs/advanced_query.html#FirstOrInit
 func (db *DB) Attrs(attrs ...interface{}) (tx *DB) {
 	tx = db.getInstance()
 	tx.Statement.attrs = attrs
@@ -418,8 +418,8 @@ func (db *DB) Attrs(attrs ...interface{}) (tx *DB) {
 //	db.Where(User{Name: "jinzhu"}).Assign(User{Email: "fake@fake.org"}).FirstOrInit(&user)
 //	// user -> User{Name: "jinzhu", Age: 20, Email: "fake@fake.org"}
 //
-// [FirstOrCreate]: https://gorm.io/docs/advanced_query.html#FirstOrCreate
-// [FirstOrInit]: https://gorm.io/docs/advanced_query.html#FirstOrInit
+// [FirstOrCreate]: https://github.com/andreidm777/docs/advanced_query.html#FirstOrCreate
+// [FirstOrInit]: https://github.com/andreidm777/docs/advanced_query.html#FirstOrInit
 func (db *DB) Assign(attrs ...interface{}) (tx *DB) {
 	tx = db.getInstance()
 	tx.Statement.assigns = attrs
